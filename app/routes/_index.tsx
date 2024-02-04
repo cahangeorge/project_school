@@ -247,7 +247,7 @@ export default function Index() {
 
               content={true}
 
-              to_subjects={true}
+              to_subjects={loaderData.type === type_user_list.teacher ? true : false}
               
               children={
                   loaderData.type === type_user_list.admin ?
