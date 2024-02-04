@@ -183,7 +183,7 @@ export default function Login() {
             children={
                 <>
 
-                    {userType ? <NavigateButton action_func={() => setUserType(!userType)} /> : <NavigateButton action_func={() => setToNavigate(-1)} />}
+                    {userType ? <NavigateButton action_func={() => setUserType(!userType)} /> : <NavigateButton action_func={() => setToNavigate(!toNavigate)} />}
 
                     <input type="hidden" name="typeUserIsCorrected" defaultValue={'' + userType} />
 

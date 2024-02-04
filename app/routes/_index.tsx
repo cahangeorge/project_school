@@ -190,15 +190,16 @@ export default function Index() {
       <Container
         children={
           <div className="
-            w-[90%] sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%] 
-            bg-transparent 
+            w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] xl:w-[55%]
             border-2 border-dashed border-white
-            backdrop-blur-sm
+            backdrop-blur-xl
+            bg-sky-600/20
             shadow-md 
             text-white 
             rounded-xl
             px-3 py-6
             my-10
+            mx-auto
           ">
             <h1 className="text-4xl text-center text-white">Alege participarea:</h1>
             <div className="flex flex-wrap justify-center">
