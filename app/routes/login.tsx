@@ -12,6 +12,7 @@ import { createUserSessionId, getUserCookieType, getUserCookieId } from "#app/ut
 import { createUserSessionType } from "#app/utils/session.server.ts";
 import { costumValidate, email_regexp } from "#app/utils/validate.functions.ts";
 import { NavigateButton } from "#app/components/NavigateButton.tsx";
+import { Container } from "#app/components/ui/Container.tsx";
 
 
 // META FUNCTION
@@ -177,59 +178,63 @@ export default function Login() {
     // console.log(userType, loaderData, actionData?.typeUserSelected === false)
 
     return (
-        <Former
-            heading="Autentifica-te"
-            submit="Acceseaza contul"
+        <Container
             children={
-                <>
-
-                    {userType ? <NavigateButton action_func={() => setUserType(!userType)} /> : <NavigateButton action_func={() => setToNavigate(!toNavigate)} />}
-
-                    <input type="hidden" name="typeUserIsCorrected" defaultValue={'' + userType} />
-
-                    <Message
-                        message={actionData?.formError}
-                        bgColor="bg-red-500/[0.5]"
-                    />
-
-                    {userType ? (
+                <Former
+                    heading="Autentifica-te"
+                    submit="Acceseaza contul"
+                    children={
                         <>
-                            <Input
-                                type="text"
-                                name="email"
-                                placeholder="Email"
-                                defaultValue={actionData?.fields?.email}
-                                icon={<i className="ri-mail-line ri-xl"></i>}
-                                isError={actionData?.fieldErrors?.email}
-                                style=""
+
+                            {userType ? <NavigateButton action_func={() => setUserType(!userType)} /> : <NavigateButton action_func={() => setToNavigate(!toNavigate)} />}
+
+                            <input type="hidden" name="typeUserIsCorrected" defaultValue={'' + userType} />
+
+                            <Message
+                                message={actionData?.formError}
+                                bgColor="bg-red-500/[0.5]"
                             />
-                            <Input
-                                type="password"
-                                name="password"
-                                placeholder="Parola"
-                                defaultValue={actionData?.fields?.password}
-                                icon={<i class="ri-lock-line ri-xl"></i>}
-                                isError={actionData?.fieldErrors?.password}
-                                style=""
-                            />
+
+                            {userType ? (
+                                <>
+                                    <Input
+                                        type="text"
+                                        name="email"
+                                        placeholder="Email"
+                                        defaultValue={actionData?.fields?.email}
+                                        icon={<i className="ri-mail-line ri-xl"></i>}
+                                        isError={actionData?.fieldErrors?.email}
+                                        style=""
+                                    />
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        placeholder="Parola"
+                                        defaultValue={actionData?.fields?.password}
+                                        icon={<i class="ri-lock-line ri-xl"></i>}
+                                        isError={actionData?.fieldErrors?.password}
+                                        style=""
+                                    />
+                                </>
+                            ) : (
+                                <Select
+                                    options={[
+                                        { value: type_user_list.admin, text: 'Admin' },
+                                        { value: type_user_list.admin_institution, text: "Admin Institutie" },
+                                        { value: type_user_list.teacher, text: 'Profesor' },
+                                        { value: type_user_list.student, text: 'Elev' }
+                                    ]}
+                                    name="type_user"
+                                    label="Tip utilizator"
+                                    defaultValue={loaderData}
+                                    icon={<i class="ri-expand-up-down-line ri-xl"></i>}
+                                    isError={''}
+                                    disabled={false}
+                                />
+                            )}
                         </>
-                    ) : (
-                        <Select
-                            options={[
-                                { value: type_user_list.admin, text: 'Admin' },
-                                { value: type_user_list.admin_institution, text: "Admin Institutie" },
-                                { value: type_user_list.teacher, text: 'Profesor' },
-                                { value: type_user_list.student, text: 'Elev' }
-                            ]}
-                            name="type_user"
-                            label="Tip utilizator"
-                            defaultValue={loaderData}
-                            icon={<i class="ri-expand-up-down-line ri-xl"></i>}
-                            isError={''}
-                            disabled={false}
-                        />
-                    )}
-                </>
+                    }
+                />
             }
         />
     )
