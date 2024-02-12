@@ -1,5 +1,6 @@
-export const Card = ({ items } : {
-    items: any
+export const Card = ({ items, style } : {
+    items: any,
+    style?: any
 }) => {
 
     return (
