@@ -87,19 +87,19 @@ async function seed() {
     const values_correction_type = ['auto', 'manual']
 
     const class_teacher_array = Array.from({
-        length: faker.number.int({ min: 10, max: 11 })
+        length: faker.number.int({ min: 2, max: 3 })
     })
 
     const students_parents_array = Array.from({
-        length: faker.number.int({ min: 25, max: 30 })
+        length: faker.number.int({ min: 3, max: 5 })
     })
 
     const subjects_array = Array.from({
-        length: faker.number.int({ min: 40, max: 50 })
+        length: faker.number.int({ min: 3, max: 5 })
     })
 
     const answers_subject_array = Array.from({
-        length: faker.number.int({ min: 4, max: 6 })
+        length: faker.number.int({ min: 3, max: 5 })
     })
 
     for (let index = 0; index < totalAdminInstitutions; index++) {
@@ -211,7 +211,7 @@ async function seed() {
 
                     const subjects = teacher.subjects
 
-                    const selected_subjects = 9
+                    const selected_subjects = 2
 
                     const results_subjects = subjects.slice(Math.floor(Math.random() * subjects.length), Math.floor(Math.random() * subjects.length) + selected_subjects);
     

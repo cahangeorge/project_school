@@ -1,125 +1,9 @@
-// import { db } from "./db.server"
-// import { message_list } from "./list.values"
 
 import { useEffect, useState } from "react";
 import fs from 'fs'
 import path from "path"
 import * as child_process from 'child_process'
 
-// export const check_type_user = (
-//     typeUser: string | null,
-//     compareUser: string[]
-// ) => {
-//     let checks = 0
-//     compareUser.forEach((item) => {
-    
-//         if (typeUser !== item) {
-//             checks++
-//         }
-
-//     })
-
-//     console.log(checks)
-
-//     if (checks === compareUser.length) {
-//         return {
-//             status: 401,
-//             message: message_list.access_rights,
-//             data: null
-//         }
-//     }
-// }
-
-// export const check_admin_exist = async (
-//     id: string | null,
-// ) => {
-
-//     if (!id) {
-//         return {
-//             status: 400,
-//             message: message_list.went_wrong,
-//             data: null
-//         }
-//     }
-
-//     const adminExists = await db.admin.findUnique({
-//         where: { id }
-//     })
-
-//     return adminExists
-
-// }
-
-// export const check_admin_institution_exist = async (
-//     id: string | null,
-//     include_ins: boolean
-// ) => {
-
-//     if (!id) {
-//         return {
-//             status: 400,
-//             message: message_list.went_wrong,
-//             data: null
-//         }
-//     }
-
-//     const adminExists = await db.adminInstitution.findUnique({
-//         where: { id },
-//         include: {
-//             institution: include_ins
-//         }
-//     })
-
-//     return {
-//         status: 200,
-//         message: message_list.success,
-//         data: adminExists
-//     }
-
-// }
-
-// export const check_user_exist = async (
-//     adminId: string | null,
-//     adminInstitutionId: string | null,
-//     includeInstitution: boolean
-// ) => {
-
-//     if (!adminId && !adminInstitutionId) {
-//         return {
-//             status: 400,
-//             message: message_list.went_wrong,
-//             data: null
-//         }
-//     }
-
-//     let adminExists = null
-
-//     if (adminId) {
-
-//         const id = adminId
-
-//         adminExists = await db.admin.findUnique({
-//             where: { id }
-//         })
-
-//     }
-    
-//     if (adminInstitutionId) {
-
-//         const id = adminInstitutionId
-
-//         adminExists = await db.adminInstitution.findUnique({
-//             where: { id },
-//             include: {
-//                 institution: includeInstitution
-//             }
-//         })
-
-//     }
-
-//     return adminExists
-
-// }
 function padTo2Digits(num: number) {
     return num.toString().padStart(2, '0');
 }
@@ -131,13 +15,6 @@ export function convertMsToTime(milliseconds: number) {
   
     seconds = seconds % 60;
     minutes = minutes % 60;
-  
-    // 👇️ If you want to roll hours over, e.g. 00 to 24
-    // 👇️ uncomment the line below
-    // uncommenting next line gets you `00:00:00` instead of `24:00:00`
-    // or `12:15:31` instead of `36:15:31`, etc.
-    // 👇️ (roll hours over)
-    // hours = hours % 24;
   
     return {
       time: `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`,

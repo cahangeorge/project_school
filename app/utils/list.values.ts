@@ -86,7 +86,8 @@ export const icons = {
     spy: "ri-spy-line ri-xl",
     bug: "ri-bug-2-line ri-xl",
     draft_file: "ri-draft-line ri-xl",
-    folder_open: "ri-folder-open-line ri-xl"
+    folder_open: "ri-folder-open-line ri-xl",
+    loader: "ri-loader-line ri-xl"
 }
 
 export const status_values_file = {
