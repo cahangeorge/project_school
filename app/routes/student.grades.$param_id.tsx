@@ -23,7 +23,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ request, params } : LoaderFunctionArgs) => {
 
-  const path_root = 'app/codes'
+  const path_root = 'public/codes'
   const dir_codes = fs.readdirSync(path_root)
 
   if (dir_codes.length > 0) {

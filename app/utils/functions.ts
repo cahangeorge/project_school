@@ -52,7 +52,7 @@ export async function runCodeC({ id, data, example, variables, variables_modifie
   restrict_and_specs?: string
 }) {
 
-  const pathDir: string = `app/codes/sol_${id}`
+  const pathDir: string = `public/codes/sol_${id}`
   const filePathC: string = path.join(pathDir, 'code.cpp')
   const filePathExe: string = path.join(pathDir, 'runner.exe') 
   const filePathResults: string = path.join(pathDir, 'results.txt') 
