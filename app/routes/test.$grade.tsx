@@ -303,22 +303,24 @@ export default function CreateTest() {
     <Container
         children={
             <div className="
-                w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] xl:w-[55%] 
-                bg-transparent 
-                border-4 border-dashed border-white
-                backdrop-blur-xl
-                shadow-md 
-                text-white 
-                rounded-xl
-                p-6
-                my-10
+            w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] xl:w-[55%] 
+            backdrop-blur-xl
+            bg-sky-600/20
+            border-4 border-dashed border-white
+            shadow-md 
+            text-white 
+            rounded-xl
+            py-10 px-3
+            my-10
+            mx-auto
+            relative
             ">
                 <Form 
                     method="post" 
                     onSubmit={(event) => {
                         submit(event.currentTarget)
                     }}
-                    className="flex flex-col items-center relative"
+                    className="flex flex-col items-center space-y-12"
                 >   
 
                     <input type="hidden" name="suspicious_hours" defaultValue={historyControl} />
