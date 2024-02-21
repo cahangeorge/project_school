@@ -1,5 +1,5 @@
 import { redirect, type MetaFunction, LoaderFunctionArgs, json, ActionFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useNavigation } from "@remix-run/react";
 import { SectionWithForm } from "#app/components/SectionWithForm.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { icons, type_user_list } from "#app/utils/list.values.ts";
@@ -185,6 +185,8 @@ export const action = async ({ request } : ActionFunctionArgs) => {
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>()
 
+  const navigation = useNavigation()
+
   if (!loaderData.type) {
     return (
       <Container
@@ -203,8 +205,8 @@ export default function Index() {
           ">
             <h1 className="text-4xl text-center text-white">Alege participarea:</h1>
             <div className="flex flex-wrap justify-center">
-              <Link to="/login" className="outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6">Autentifica-te</Link>
-              <Link to="/check_code_register" className="outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6">Inregistreaza-te</Link>
+              <Link to="/login" className={`${navigation.state === 'loading' && 'cursor-not-allowed'} outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6`}>Autentifica-te</Link>
+              <Link to="/check_code_register" className={`${navigation.state === 'loading' && 'cursor-not-allowed'} outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6`}>Inregistreaza-te</Link>
             </div>
           </div>
         }
@@ -260,8 +262,8 @@ export default function Index() {
                             <InfoElem icon={<Icon value={icons.user} />} label={'Admin Institutie'} item={item?.adminInstitution?.name} />
 
                             <div className="flex flex-wrap items-center justify-center space-x-4">
-                              <Link to={'/institution/edit/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link>
-                              <Link to={'/institution/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
+                              <Link to={'/institution/edit/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link>
+                              <Link to={'/institution/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
                             </div>
                           </>
                         }
@@ -276,8 +278,8 @@ export default function Index() {
                               <InfoElem icon={<Icon value={icons.class} />} label="Clasa" item={!item.number || !item.letter ? 'NULL' : item.number + " " + item.letter} />
 
                               <div className="flex flex-wrap items-center justify-center space-x-4">
-                                <Link to={`/class/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link> 
-                                <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
+                                <Link to={`/class/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link> 
+                                <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
                               </div>
                             </>
                           }
@@ -293,7 +295,7 @@ export default function Index() {
                                 <InfoElem icon={<Icon value={icons.class} />} label="Clasa" item={!item.number || !item.letter ? 'NULL' : item.number + " " + item.letter} />
 
                                 <div className="flex flex-wrap items-center justify-center space-x-4">
-                                  <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
+                                  <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
                                 </div>
                               </>
                             }
@@ -309,7 +311,7 @@ export default function Index() {
                                   <InfoElem icon={<Icon value={icons.course} />} label="Materia" item={!item.course ? "NULL" : item.course} />
 
                                   <div className="flex flex-wrap items-center justify-center space-x-4">
-                                    <Link to={`/student/grades/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Note</Link>
+                                    <Link to={`/student/grades/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Note"}</Link>
                                   </div>
                                 </>
                               }
@@ -336,7 +338,7 @@ export default function Index() {
                               <InfoElem icon={<Icon value={icons.user} />} label="Profesor" item={item.name} />
 
                               <div className="flex flex-wrap items-center justify-center space-x-4">
-                                <Link to={`/teacher/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link> 
+                                <Link to={`/teacher/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link> 
                               </div>
                             </>
                           }
