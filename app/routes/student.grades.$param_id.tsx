@@ -23,122 +23,122 @@ export const meta: MetaFunction = () => {
 
 export const loader = async ({ request, params } : LoaderFunctionArgs) => {
 
-  const path_root = 'public/codes'
-  const dir_codes = fs.readdirSync(path_root)
+  // const path_root = 'public/codes'
+  // const dir_codes = fs.readdirSync(path_root)
 
-  if (dir_codes.length > 0) {
+  // if (dir_codes.length > 0) {
 
-    let id_solution = null
-    let term_complete = 0
-    let term_incomplete = 0
-    let test_good = 0
-    let test_bad = 0
-    let error_file = 0
+  //   let id_solution = null
+  //   let term_complete = 0
+  //   let term_incomplete = 0
+  //   let test_good = 0
+  //   let test_bad = 0
+  //   let error_file = 0
 
-    dir_codes.forEach( async (file) => {
+  //   dir_codes.forEach( async (file) => {
 
-      id_solution = file.split('sol_')[1]
+  //     id_solution = file.split('sol_')[1]
 
-      const path_sol = path.join(path_root, file)
+  //     const path_sol = path.join(path_root, file)
 
-      const dir_sol = fs.readdirSync(path_sol)
+  //     const dir_sol = fs.readdirSync(path_sol)
 
-      // console.log(dir_sol.includes('results.txt'), dir_sol)
+  //     // console.log(dir_sol.includes('results.txt'), dir_sol)
 
-      if (dir_sol.length > 0 && dir_sol.includes('results.txt')) {
+  //     if (dir_sol.length > 0 && dir_sol.includes('results.txt')) {
         
-        const path_results = path.join(path_sol, 'results.txt')
+  //       const path_results = path.join(path_sol, 'results.txt')
 
-        const get_results = fs.readFileSync(path_results, 'utf8')
+  //       const get_results = fs.readFileSync(path_results, 'utf8')
 
         
-        if (get_results.includes("ERRORFILE")) {
-          error_file++
-        }
+  //       if (get_results.includes("ERRORFILE")) {
+  //         error_file++
+  //       }
 
-        if (get_results.includes("ENDFILE")) {
+  //       if (get_results.includes("ENDFILE")) {
           
-          const get_lines = get_results.split('\n')
+  //         const get_lines = get_results.split('\n')
 
-          get_lines.forEach((line) => {
+  //         get_lines.forEach((line) => {
 
-            if (line.includes('term_complete')) 
-              term_complete++
-            else if (line.includes('term_incomplete'))
-              term_incomplete++
-            else if (line.includes("test_good"))
-              test_good++
-            else if (line.includes("test_bad"))
-              test_bad++
+  //           if (line.includes('term_complete')) 
+  //             term_complete++
+  //           else if (line.includes('term_incomplete'))
+  //             term_incomplete++
+  //           else if (line.includes("test_good"))
+  //             test_good++
+  //           else if (line.includes("test_bad"))
+  //             test_bad++
 
-          })
+  //         })
 
-        }
+  //       }
 
-        if (fs.existsSync(path.join(path_sol, 'code.cpp')))
-            fs.unlinkSync(path.join(path_sol, 'code.cpp'))
+  //       if (fs.existsSync(path.join(path_sol, 'code.cpp')))
+  //           fs.unlinkSync(path.join(path_sol, 'code.cpp'))
           
-        if (fs.existsSync(path.join(path_sol, 'results.txt')))
-          fs.unlinkSync(path.join(path_sol, 'results.txt'))
+  //       if (fs.existsSync(path.join(path_sol, 'results.txt')))
+  //         fs.unlinkSync(path.join(path_sol, 'results.txt'))
 
-        if (fs.existsSync(path.join(path_sol, 'runner.exe')))
-          fs.unlinkSync(path.join(path_sol, 'runner.exe'))
+  //       if (fs.existsSync(path.join(path_sol, 'runner.exe')))
+  //         fs.unlinkSync(path.join(path_sol, 'runner.exe'))
         
 
-        if (fs.existsSync(path_sol))
-          fs.rmdirSync(path_sol)
+  //       if (fs.existsSync(path_sol))
+  //         fs.rmdirSync(path_sol)
 
-      }
+  //     }
 
-      const get_solution = await db.solution.findUnique({
-        where: { id: id_solution },
-        select: {
-          status: true,
-          grade: {
-            select: {
-              status: true
-            }
-          }
-        }
-      })
+  //     const get_solution = await db.solution.findUnique({
+  //       where: { id: id_solution },
+  //       select: {
+  //         status: true,
+  //         grade: {
+  //           select: {
+  //             status: true
+  //           }
+  //         }
+  //       }
+  //     })
 
       
-      let status_sol = ''
+  //     let status_sol = ''
 
-      if (error_file > 0) {
-        status_sol += 'error_file,'
-      }
+  //     if (error_file > 0) {
+  //       status_sol += 'error_file,'
+  //     }
 
-      if (test_bad > 0) {
-        status_sol += 'test_bad,'
-      }
+  //     if (test_bad > 0) {
+  //       status_sol += 'test_bad,'
+  //     }
 
-      if (term_incomplete > 0) {
-        status_sol += 'term_incomplete,'
-      }
+  //     if (term_incomplete > 0) {
+  //       status_sol += 'term_incomplete,'
+  //     }
 
-      if (test_good > 0) {
-        status_sol += 'test_good,'
-      }
+  //     if (test_good > 0) {
+  //       status_sol += 'test_good,'
+  //     }
 
-      if (term_complete > 0) {
-        status_sol += 'term_complete'
-      }
+  //     if (term_complete > 0) {
+  //       status_sol += 'term_complete'
+  //     }
 
-      await db.solution.update({
-        where: { id: id_solution },
-        data: {
-          status: status_sol
-        }
-      })
+  //     await db.solution.update({
+  //       where: { id: id_solution },
+  //       data: {
+  //         status: status_sol
+  //       }
+  //     })
 
-      // await db.grade.update({
-      //   where: { id: get_solution.grade.status }
-      // })
+  //     // await db.grade.update({
+  //     //   where: { id: get_solution.grade.status }
+  //     // })
 
-    })
+  //   })
 
-  }
+  // }
 
   const userId = await getUserCookieId(request)
   const userType = await getUserCookieType(request)

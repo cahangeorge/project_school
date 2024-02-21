@@ -280,7 +280,7 @@ export default function Student() {
                     options={[
                     { value: 'grid', text: 'Grila' },
                     // { value: 'write', text: 'Descriere' },
-                    { value: 'code', text: 'Cod' }
+                    // { value: 'code', text: 'Cod' }
                     ]}
                     name="requirement_type"
                     label="Tip cerinta"
