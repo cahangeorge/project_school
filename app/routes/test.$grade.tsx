@@ -313,14 +313,13 @@ export default function CreateTest() {
             py-10 px-3
             my-10
             mx-auto
-            relative
             ">
                 <Form 
                     method="post" 
                     onSubmit={(event) => {
                         submit(event.currentTarget)
                     }}
-                    className="flex flex-col items-center space-y-12"
+                    className="flex flex-col items-center space-y-12 relative"
                 >   
 
                     <input type="hidden" name="suspicious_hours" defaultValue={historyControl} />
