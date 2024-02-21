@@ -10,10 +10,10 @@ export const InfoElem = ({ icon, label, item } : {
                 <p>{label}:</p>
             </div>
             <p className="select-all">{
-                !item ? 
-                    'NULL' : 
-                    item.length > 15 ?
-                        item.substring(0, 15) + '...' :
+                // !item ? 
+                //     'NULL' : 
+                //     item.length > 15 ?
+                //         item.substring(0, 15) + '...' :
                         item
                 }
             </p>

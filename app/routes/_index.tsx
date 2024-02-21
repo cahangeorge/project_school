@@ -1,5 +1,5 @@
 import { redirect, type MetaFunction, LoaderFunctionArgs, json, ActionFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData, useNavigation } from "@remix-run/react";
+import { Link, isRouteErrorResponse, useLoaderData, useNavigate, useNavigation, useRouteError } from "@remix-run/react";
 import { SectionWithForm } from "#app/components/SectionWithForm.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { icons, type_user_list } from "#app/utils/list.values.ts";
@@ -10,6 +10,8 @@ import { Card } from "#app/components/Card.tsx";
 import { Icon } from "#app/components/ui/Icon.tsx";
 import { IdElem } from "#app/components/ui/IdElem.tsx";
 import { InfoElem } from "#app/components/ui/InfoElem.tsx";
+import { NavigateButton } from "#app/components/NavigateButton";
+import { useEffect, useState } from "react";
 
 
 // META FUNCTION
@@ -185,8 +187,6 @@ export const action = async ({ request } : ActionFunctionArgs) => {
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>()
 
-  const navigation = useNavigation()
-
   if (!loaderData.type) {
     return (
       <Container
@@ -245,8 +245,6 @@ export default function Index() {
 
               valueSubmit={loaderData.type === type_user_list.admin_institution ? 'class' : undefined}
 
-              navigation={navigation.state}
-
               childrenInForm=""
 
               content={true}
@@ -264,8 +262,8 @@ export default function Index() {
                             <InfoElem icon={<Icon value={icons.user} />} label={'Admin Institutie'} item={item?.adminInstitution?.name} />
 
                             <div className="flex flex-wrap items-center justify-center space-x-4">
-                              <Link to={'/institution/edit/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link>
-                              <Link to={'/institution/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
+                              <Link to={'/institution/edit/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link>
+                              <Link to={'/institution/' + item?.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
                             </div>
                           </>
                         }
@@ -280,8 +278,8 @@ export default function Index() {
                               <InfoElem icon={<Icon value={icons.class} />} label="Clasa" item={!item.number || !item.letter ? 'NULL' : item.number + " " + item.letter} />
 
                               <div className="flex flex-wrap items-center justify-center space-x-4">
-                                <Link to={`/class/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link> 
-                                <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
+                                <Link to={`/class/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link> 
+                                <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
                               </div>
                             </>
                           }
@@ -297,7 +295,7 @@ export default function Index() {
                                 <InfoElem icon={<Icon value={icons.class} />} label="Clasa" item={!item.number || !item.letter ? 'NULL' : item.number + " " + item.letter} />
 
                                 <div className="flex flex-wrap items-center justify-center space-x-4">
-                                  <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Vizualizare"}</Link>
+                                  <Link to={`/class/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Vizualizare</Link>
                                 </div>
                               </>
                             }
@@ -313,7 +311,7 @@ export default function Index() {
                                   <InfoElem icon={<Icon value={icons.course} />} label="Materia" item={!item.course ? "NULL" : item.course} />
 
                                   <div className="flex flex-wrap items-center justify-center space-x-4">
-                                    <Link to={`/student/grades/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Note"}</Link>
+                                    <Link to={`/student/grades/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Note</Link>
                                   </div>
                                 </>
                               }
@@ -340,7 +338,7 @@ export default function Index() {
                               <InfoElem icon={<Icon value={icons.user} />} label="Profesor" item={item.name} />
 
                               <div className="flex flex-wrap items-center justify-center space-x-4">
-                                <Link to={`/teacher/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Editare"}</Link> 
+                                <Link to={`/teacher/edit/` + item.id} className="border-2 border-dashed border-white hover:border-solid p-2 rounded-xl shadow text-center flex-1">Editare</Link> 
                               </div>
                             </>
                           }
@@ -355,4 +353,58 @@ export default function Index() {
       }
     />
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  const navigate = useNavigate()
+
+  const [getBack, setGetBack] = useState(false)
+
+  useEffect(() => {
+
+    if (getBack) {
+        navigate(-1)
+    }
+    
+  }, [getBack])
+
+  return (
+    <Container
+      children={
+        <div className="
+          w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] xl:w-[55%]
+          border-2 border-dashed border-white
+          backdrop-blur-xl
+          bg-red-600/20
+          shadow-md 
+          text-white 
+          rounded-xl
+          px-3 py-6
+          my-10
+          mx-auto
+          relative
+        ">
+          <NavigateButton action_func={() => setGetBack(!getBack)} />
+          {isRouteErrorResponse(error) ? (
+            <div className="mt-16 px-3">
+              <h1 className="text-2xl">
+                {error.status} {error.statusText}
+              </h1>
+              <p>{error.data}</p>
+            </div>
+          ) : error instanceof Error ? (
+            <div className="mt-16 px-3">
+              <h1 className="text-2xl">Error</h1>
+              <p>{error.message}</p>
+            </div>
+          ) : (
+            <h1 className="text-2xl mt-16 px-3">Unknown Error</h1>
+          )}
+        </div>
+      }
+    />
+  );
+
 }

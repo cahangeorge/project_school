@@ -4,11 +4,10 @@ import { Icon } from "./ui/Icon.tsx"
 import { icons } from "#app/utils/list.values.ts"
 
 export const SectionWithForm = (
-    { title, submit, valueSubmit, navigation, childrenInForm, children, content, create_test, to_subjects } : {
+    { title, submit, valueSubmit, childrenInForm, children, content, create_test, to_subjects } : {
         title: string,
         submit: string | Element | null,
         valueSubmit: string | undefined,
-        navigation: any,
         childrenInForm: any,
         children: any,
         content: boolean,
@@ -30,7 +29,6 @@ export const SectionWithForm = (
                                 type="submit"
                                 value={valueSubmit}
                                 name="submit_button"
-                                disabled={navigation === 'submitting' ? true : false}
                                 className="
                                     border-2 border-dashed border-white hover:border-solid
                                     relative
