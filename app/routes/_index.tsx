@@ -205,7 +205,7 @@ export default function Index() {
           ">
             <h1 className="text-4xl text-center text-white">Alege participarea:</h1>
             <div className="flex flex-wrap justify-center">
-              <Link to="/login" className={`${navigation.state === 'loading' && 'cursor-not-allowed'} outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6`}>Autentifica-te</Link>
+              <Link to="/login" className={`${navigation.state === 'loading' && 'cursor-not-allowed'} outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6`}>{navigation.state === 'loading' ? <Icon value={icons.loader} /> : "Autentifica-te"}</Link>
               <Link to="/check_code_register" className={`${navigation.state === 'loading' && 'cursor-not-allowed'} outline-none rounded-xl p-3 shadow-md bg-transparent border-2 border-white border-dashed text-white text-sm font-semibold transition-all ease-in-out duration-300 hover:border-solid hover:scale-105 m-6`}>Inregistreaza-te</Link>
             </div>
           </div>
