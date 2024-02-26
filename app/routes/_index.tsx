@@ -1,5 +1,5 @@
 import { redirect, type MetaFunction, LoaderFunctionArgs, json, ActionFunctionArgs } from "@remix-run/node";
-import { Link, isRouteErrorResponse, useLoaderData, useNavigate, useNavigation, useRouteError } from "@remix-run/react";
+import { Link, isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
 import { SectionWithForm } from "#app/components/SectionWithForm.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { icons, type_user_list } from "#app/utils/list.values.ts";
@@ -28,10 +28,6 @@ export const loader = async ({ request } : LoaderFunctionArgs) => {
 
   const userId = await getUserCookieId(request) // get user id
   const typeUser = await getUserCookieType(request) // get type user
-
-  // if (typeof userId !== "string" || typeof typeUser !== "string") {
-  //   throw redirect('/login')
-  // }
 
   const id = userId
   const check_user: {

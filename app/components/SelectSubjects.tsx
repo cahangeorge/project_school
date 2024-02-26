@@ -116,11 +116,6 @@ export const SelectSubjects: React.FC<SelectType> = ({
                         aria-labelledby="listbox-label" 
                         aria-activedescendant="listbox-option-3"
                     >
-                        {/* <!--
-                            Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-
-                            Highlighted: "bg-indigo-600 text-white", Not Highlighted: "text-gray-900"
-                        --> */}
                         {selectedOptions.map((item, idx) => (
                             <li 
                                 className={`text-white text-sm relative cursor-default select-none p-3 m-1 transition-all ease-in-out duration-300 hover:cursor-pointer hover:bg-white/[0.25] rounded-xl ${value == item.value && "bg-white/[0.25]"}`}
@@ -130,15 +125,9 @@ export const SelectSubjects: React.FC<SelectType> = ({
                                 onClick={() => handleSubject(item.value, item.text)}
                             >
                                 <div className="flex items-center justify-between">
-                                    {/* <!-- Selected: "font-semibold", Not Selected: "font-normal" --> */}
                                     <span className="font-normal block truncate">{item.text}</span>
                                 </div>
 
-                                {/* <!--
-                                Checkmark, only display for selected option.
-
-                                Highlighted: "text-white", Not Highlighted: "text-indigo-600"
-                                --> */}
                                 {value == item.value &&
                                     <span className="text-white absolute inset-y-0 right-0 flex items-center pr-4">
                                         <i className="ri-check-line ri-xl"></i>

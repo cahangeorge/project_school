@@ -2,7 +2,6 @@ import { redirect, type MetaFunction, LoaderFunctionArgs, json, ActionFunctionAr
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { db } from "#app/utils/db.server.ts";
 import { getUserCookieId, getUserCookieType } from "#app/utils/session.server.ts";
-import { FormModal } from "#app/components/FormModal.tsx";
 import { Input } from "#app/components/ui/Input.tsx";
 import { costumValidate } from "#app/utils/validate.functions.ts";
 import { useEffect, useState } from "react";

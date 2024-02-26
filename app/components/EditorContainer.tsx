@@ -1,4 +1,4 @@
-import EditorMonaco, { Editor } from '@monaco-editor/react';
+import { Editor } from '@monaco-editor/react';
 import { useState } from 'react';
 
 export const EditorContainer = ({ result }: { result: any }) => {

@@ -1,5 +1,4 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node"
-import { db } from "./db.server"
 
 // Store session secret from ENV
 const sessionSecret = process.env.SESSION_SECRET
@@ -87,32 +86,10 @@ export async function requireUserId(
     return userId
 }
 
-
-// Get user from DB
-// export async function getUser(request: Request) {
-//     const userId = await getUserId(request)
-
-//     if (typeof userId !== "string") {
-//         return null
-//     }
-
-//     const user = await db.user.findUnique({
-//         select: { id: true, email: true },
-//         where: { id: userId }
-//     })
-
-//     if (!user) {
-//         throw logout(request)
-//     }
-
-//     return user
-// }
-
-
 // Logout function
 export async function logout(request: Request) {
     const session = await getUserSessionId(request)
-    // console.log(session)
+    
     const cookie_user_id = await storage_user_id.destroySession(session)
     const cookie_user_type = await storage_user_type.destroySession(session)
 

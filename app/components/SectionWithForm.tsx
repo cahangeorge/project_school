@@ -62,7 +62,6 @@ export const SectionWithForm = (
                             <Icon value={icons.folder_open} />
                         </Link>
                     )}
-                    {/* {content &&  */}
                         <button
                             type="button"
                             onClick={() => setShowContent(!showContent)}
@@ -78,7 +77,6 @@ export const SectionWithForm = (
                         >
                             <Icon value={showContent ? icons.up_arrow : icons.down_arrow} />
                         </button>
-                    {/* } */}
                 </div>
             </div>
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${showContent ? 'h-auto opacity-100' : 'h-0 opacity-0'} transition-all transform duration-300 ease-in-out overflow-hidden`}>

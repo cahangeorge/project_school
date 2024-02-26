@@ -6,7 +6,6 @@ import { Icon } from "./ui/Icon.tsx"
 type Textarea = {
     name: string,
     placeholder: string,
-    defaultValue: string | undefined,
     isError: string | undefined | null,
     style: string,
     variables: any,
@@ -14,15 +13,14 @@ type Textarea = {
 }
 
 export const Structures = (
-    { name, placeholder, defaultValue, isError, variables, setVariables } : Textarea
+    { name, placeholder, isError, variables, setVariables } : Textarea
 ) => {
-    // const [variables, setVariables] = useState<any>([])
     const [value, setValue] = useState("")
 
     function addVariable() {
-        // console.log(value)
+
         setVariables([...variables, value])
-        // console.log(variables)
+        
         setValue('')
     }
 

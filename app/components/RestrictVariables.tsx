@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Select } from "./ui/Select.tsx"
-import { Input } from "./ui/Input.tsx"
 import { Icon } from "./ui/Icon.tsx"
 import { icons } from "#app/utils/list.values.ts"
 
@@ -10,15 +9,14 @@ type Textarea = {
     defaultValue: string | undefined,
     isError: string | undefined | null,
     style: string,
-    variables: any,
-    setVariables: any
+    variables: any
 }
 
 export const RestrictVariables = (
-    { name, placeholder, defaultValue, isError, variables, setVariables } : Textarea
+    { name, placeholder, defaultValue, isError, variables } : Textarea
 ) => {
     const [restrictions, setRestrictions] = useState<any>(defaultValue?.split(',') || [])
-    // console.log(restrictions)
+
     const [value, setValue] = useState("")
 
     const [chooseVariable, setChooseVariable] = useState("")
@@ -26,9 +24,9 @@ export const RestrictVariables = (
     const [chooseValue, setChooseValue] = useState("")
 
     function addRestriction() {
-        // console.log(value)
+
         setRestrictions([...restrictions, chooseVariable + ' ' + chooseCondition + ' ' + chooseValue])
-        // console.log(variables)
+        
         setValue('')
     }
 

@@ -14,7 +14,7 @@ type Textarea = {
 }
 
 export const Variables = (
-    { name, placeholder, defaultValue, isError, variables, setVariables } : Textarea
+    { name, placeholder, isError, variables, setVariables } : Textarea
 ) => {
     const [value, setValue] = useState("")
 

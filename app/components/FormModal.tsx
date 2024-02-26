@@ -2,12 +2,11 @@ import { Form } from "@remix-run/react"
 
 type Former = {
     submit: string,
-    submitForm: any,
     children: any
 }
 
 export const FormModal = (
-    { submit, submitForm, children } : Former
+    { submit, children } : Former
 ) => {
     return (
         <div className="

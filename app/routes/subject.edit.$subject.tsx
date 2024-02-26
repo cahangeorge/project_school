@@ -4,7 +4,6 @@ import { SectionWithForm } from "#app/components/SectionWithForm.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { invariantResponse } from "#app/utils/misc.tsx";
 import { getUserCookieId, getUserCookieType } from "#app/utils/session.server.ts";
-import { FormModal } from "#app/components/FormModal.tsx";
 import { costumValidate } from "#app/utils/validate.functions.ts";
 import { useEffect, useState } from "react";
 import { Textarea } from "#app/components/ui/Textarea.tsx";
@@ -94,7 +93,6 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
     const correction_type = form.get("correction_type")
   
     let score = form.get("score")
-    // score = ''
   
     console.log(requirement, requirement_type,
       input_data, output_data, 
@@ -123,12 +121,7 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
       (
         typeof input_data !== "string" ||
         typeof output_data !== "string" ||
-        // typeof variables !== "string" ||
-        // typeof variables_modified !== "string" ||
-        // typeof restrict_and_specs !== "string" ||
-        // typeof structures !== "string" ||
         typeof example !== "string"
-        // typeof explanation !== "string"
       )
     ) {
       return json(
@@ -142,7 +135,7 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
       )
     }
   
-    if (/*correction_type === 'manual' && */typeof score !== 'string') {
+    if (typeof score !== 'string') {
       return json(
         {
             fieldErrors: null,
@@ -166,34 +159,19 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
     const fieldErrors = {
       requirement: costumValidate(!requirement, "Acest camp trebuie completat!"),
       requirement_type: costumValidate(!requirement_type, "Acest camp trebuie completat!"),
-      // correction_type: costumValidate(!correction_type, "Acest camp trebuie completat!"),
       input_data: null,
       output_data: null,
-      // variables: null,
-      // variables_modified: null,
-      // restrict_and_specs: null,
-      // structures: null,
       example: null,
-      // explanation: null,
       score: null
     }
   
     if (requirement_type === 'code') {
       fieldErrors.input_data = costumValidate(!input_data, "Acest camp trebuie completat!")
       fieldErrors.output_data = costumValidate(!output_data, "Acest camp trebuie completat!")
-      // fieldErrors.variables = costumValidate(!variables, "Acest camp trebuie completat!")
-      // fieldErrors.variables_modified = costumValidate(!variables_modified, "Acest camp trebuie completat!")
-      // fieldErrors.restrict_and_specs = costumValidate(!restrict_and_specs, "Acest camp trebuie completat!")
-      // fieldErrors.structures = costumValidate(!structures, "Acest camp trebuie completat!")
       fieldErrors.example = costumValidate(!example, "Acest camp trebuie completat!")
-      // fieldErrors.explanation = costumValidate(!explanation, "Acest camp trebuie completat!")
     }
   
-    // console.log(score)
-  
-    // if (correction_type === 'manual') {
-      fieldErrors.score = costumValidate(!score, "Acest camp trebuie completat!")
-    // }
+    fieldErrors.score = costumValidate(!score, "Acest camp trebuie completat!")
   
     if (Object.values(fieldErrors).some(Boolean)) {
       return json(
@@ -207,7 +185,7 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
       )
     }
   
-    const teacherId = id
+    // const teacherId = id
     const subject = await db.subject.update({
       where: { id: params.subject },
       data: {
@@ -278,9 +256,7 @@ export default function Student() {
 
                 <Select
                     options={[
-                    { value: 'grid', text: 'Grila' },
-                    // { value: 'write', text: 'Descriere' },
-                    // { value: 'code', text: 'Cod' }
+                      { value: 'grid', text: 'Grila' }
                     ]}
                     name="requirement_type"
                     label="Tip cerinta"
@@ -290,39 +266,22 @@ export default function Student() {
                     disabled={false}
                     setSecondValue={setShowCode}
                 />
-
-                {/* <Select
-                    options={[
-                    { value: 'auto', text: 'Automat' },
-                    { value: 'manual', text: 'Manual' },
-                    ]}
-                    name="correction_type"
-                    label="Tip nota"
-                    defaultValue={actionData?.fields?.correction_type || loaderData.correction_type}
-                    icon=""
-                    isError={actionData?.fieldErrors?.correction_type}
-                    disabled={false}
-                    setSecondValue={setShowScore}
-                /> */}
-
-                {/* {showScore === 'manual' && ( */}
-                    <Select
-                      options={[
-                          { value: '10', text: '10 pct' },
-                          { value: '15', text: '15 pct' },
-                          { value: '20', text: '20 pct' },
-                          { value: '25', text: '25 pct' },
-                          { value: '30', text: '30 pct' },
-                          { value: '50', text: '50 pct' },
-                      ]}
-                      name="score"
-                      label="Scor"
-                      defaultValue={actionData?.fields?.score || loaderData.score}
-                      icon={<Icon value={icons.select} />}
-                      isError={actionData?.fieldErrors?.score}
-                      disabled={false}
-                    />
-                {/* )} */}
+                <Select
+                  options={[
+                      { value: '10', text: '10 pct' },
+                      { value: '15', text: '15 pct' },
+                      { value: '20', text: '20 pct' },
+                      { value: '25', text: '25 pct' },
+                      { value: '30', text: '30 pct' },
+                      { value: '50', text: '50 pct' },
+                  ]}
+                  name="score"
+                  label="Scor"
+                  defaultValue={actionData?.fields?.score || loaderData.score}
+                  icon={<Icon value={icons.select} />}
+                  isError={actionData?.fieldErrors?.score}
+                  disabled={false}
+                />
 
                 
                 {showCode === 'code' && (
@@ -383,15 +342,6 @@ export default function Student() {
                         variables={structures}
                         setVariables={setStructures}
                     />
-
-                    {/* <Textarea
-                        name="restrict_and_specs"
-                        placeholder="Restrictii si specificatii"
-                        defaultValue={actionData?.fields?.restrict_and_specs}
-                        icon=""
-                        isError={actionData?.fieldErrors?.restrict_and_specs}
-                        style=""
-                    /> */}
                     <DemoDataContainer
                         name="example"
                         placeholder="Exemplu - (primul set de date va fi afisat pentru rezolvare)"

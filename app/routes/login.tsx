@@ -175,8 +175,6 @@ export default function Login() {
         
     }, [loaderData, actionData, toNavigate])
 
-    // console.log(userType, loaderData, actionData?.typeUserSelected === false)
-
     return (
         <Container
             children={

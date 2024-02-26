@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, LoaderFunctionArgs, json, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction, json, redirect } from "@remix-run/node";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { Former } from "#app/components/Former.tsx";

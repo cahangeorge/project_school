@@ -216,9 +216,6 @@ export default function Solutions() {
     
   const loaderData = useLoaderData<typeof loader>()
 
-  // const actionData = useActionData<typeof action>()
-  console.log(loaderData)
-
   const navigate = useNavigate()
   const [toNavigate, setToNavigate] = useState(false)
 

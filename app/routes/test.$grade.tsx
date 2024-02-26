@@ -1,7 +1,7 @@
 import { redirect, type MetaFunction, LoaderFunctionArgs, json, ActionFunctionArgs } from "@remix-run/node";
 import { Form, useActionData, useLoaderData, useNavigate, useSubmit } from "@remix-run/react";
 import { db } from "#app/utils/db.server.ts";
-import { convertMsToTime, runCodeC, useIsTabVisible } from "#app/utils/functions.ts";
+import { convertMsToTime, useIsTabVisible } from "#app/utils/functions.ts";
 import { invariantResponse } from "#app/utils/misc.tsx";
 import { getUserCookieId, getUserCookieType } from "#app/utils/session.server.ts";
 import { useEffect, useRef, useState } from "react";
@@ -125,8 +125,6 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
   check_grade?.solutions.forEach((solution) => {
     const get_field = form.get(`field_${solution.id}`)
 
-    // console.log(get_field, solution.id)
-
     if (get_field !== null) {
         all_answers.push({
             id: solution.id,
@@ -138,9 +136,6 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
   let grade_mark = 0
 
   let results = null
-
-//   console.log(all_answers)
-//   return null
 
   all_answers.forEach( async (answer) => {
 
@@ -183,8 +178,6 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
         }
     })
 
-    // console.log('yes')
-
     if (get_subject?.teacher.subjects[0].requirement_type === 'grid') {
         const answerIsCorrect = get_subject?.teacher.subjects[0].answers[0]?.id === answer.field
 
@@ -201,31 +194,21 @@ export const action = async ({ request, params } : ActionFunctionArgs) => {
                 completed: true
             }
         })
-    } else {
-        results = await runCodeC({
-            id: answer.id,
-            data: answer.field,
-            example: get_subject?.teacher.subjects[0].example,
-            variables: get_subject?.teacher.subjects[0].variables,
-            variables_modified: get_subject?.teacher.subjects[0].variables_modified,
-            structures: get_subject?.teacher.subjects[0].structures,
-            restrict_and_specs: get_subject?.teacher.subjects[0].restrict_and_specs
-        })
+    } 
+    // else {
 
-        const setMark = get_subject?.teacher.subjects[0].score
+    //     const setMark = get_subject?.teacher.subjects[0].score
 
-        // grade_mark += parseInt(setMark)
-
-        await db.solution.update({
-            where: { id: answer.id },
-            data: {
-                answerContent: answer.field,
-                mark: '',
-                status: '',
-                completed: true
-            }
-        })
-    }
+    //     await db.solution.update({
+    //         where: { id: answer.id },
+    //         data: {
+    //             answerContent: answer.field,
+    //             mark: '',
+    //             status: '',
+    //             completed: true
+    //         }
+    //     })
+    // }
 
     await db.grade.update({
         where: { id: params.grade },
@@ -276,7 +259,7 @@ export default function CreateTest() {
 
     if (converted_time.hours <= 0 && converted_time.minutes <= 0 && converted_time.seconds <= 0) {
 
-        // buttonRef?.current?.click();
+        buttonRef?.current?.click();
     }
 
     setTimeLeft(converted_time.time);
@@ -284,10 +267,7 @@ export default function CreateTest() {
 
   useEffect( () => {
 
-    // console.log(isVisible)
-    
     if (actionData?.updated) {
-        console.log(actionData.results)
       navigate(-1)
     }
 
@@ -327,8 +307,6 @@ export default function CreateTest() {
                     <div className="space-y-16">
 
                         <div className="absolute left-0 flex justify-between w-full">
-                            {/* <p className="border border-white border-dashed p-2 rounded-2xl shadow">{loaderData.free_points} puncte din oficiu</p> */}
-
                             <p className="border-2 border-white border-dashed p-2 rounded-xl shadow">Timp ramas: {timeLeft}</p>
                         </div>
 

@@ -1,13 +1,10 @@
 import { Form } from "@remix-run/react"
-import { useState } from "react"
 
 export const ContainerAnswer = (
     { answer } : {
         answer: any
     }
 ) => {
-    const [show, setShow] = useState(false)
-
     return (
         <div className="p-3 my-3 mx-6 rounded-3xl w-auto border-2 border-white border-dashed space-y-3">
             <Form method="post">

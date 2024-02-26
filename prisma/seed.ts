@@ -1,32 +1,9 @@
 import { db } from "#app/utils/db.server.ts"
 
-// import { db } from "~/utils/db.server"
 import { faker } from "@faker-js/faker"
 import { UniqueEnforcer } from 'enforce-unique'
 
 const uniqueUsernameEnforcer = new UniqueEnforcer()
-
-// async function seed() {
-    
-//     await Promise.all(
-//         insertAdmin().map((user) => {
-//             return db.admin.create({ data: user })
-//         })
-//     )
-
-// }
-
-// seed()
-
-// function insertAdmin() {
-//     return [
-//         {
-//             name: "Admin",
-//             email: "admin@gmail.com",
-//             password: "$2a$12$m5sKxZQvOIGrEtdKBxhM6u1lpNWRCbKffwNUttcLrFB7P/LTNv1me"
-//         }
-//     ]
-// }
 
 function getUser() {
     const firstName = faker.person.firstName()
@@ -245,4 +222,3 @@ async function seed() {
 }
 
 seed()
-// test()

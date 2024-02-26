@@ -1,4 +1,4 @@
-export const Card = ({ items, style } : {
+export const Card = ({ items } : {
     items: any,
     style?: any
 }) => {

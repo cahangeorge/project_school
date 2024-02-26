@@ -44,7 +44,6 @@ model Institution {
   address               String?
   teachers      Teacher[]
   classes       Class[]
-  // courses       Course[]
 }
 
 // Have access for his course
@@ -54,10 +53,6 @@ model Teacher {
   updateAt              DateTime            @updatedAt
   institutionId         String              @db.ObjectId
   institution           Institution         @relation(fields: [institutionId], references: [id])
-  // classId               String              @unique
-  // class                 Class               @relation(fields: [classId], references: [id])
-  // courseId              String
-  // course                Course              @relation(fields: [courseId], references: [id])
   subjects              Subject[]
   grades                Grade[]
   name                  String?
@@ -75,10 +70,7 @@ model Class {
   institution           Institution         @relation(fields: [institutionId], references: [id])
   number                String?
   letter                String?
-  // classMaster           Teacher?
-  // courses               Course[]
   students              Student[]
-  // parents               Parent[]
 }
 
 // Subject questions
@@ -112,22 +104,7 @@ model SubjectAnswer {
   question        Subject             @relation(fields: [questionId], references: [id])
   answer          String?
   positive        Boolean?             
-  // score           String
 }
-
-// model Course {
-//   id                    String              @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt             DateTime            @default(now())
-//   updateAt              DateTime            @updatedAt
-//   institutionId         String
-//   institution           Institution         @relation(fields: [institutionId], references: [id])
-//   classId               String              
-//   class                 Class               @relation(fields: [classId], references: [id])
-//   // testId                String
-//   // tests                 Test[]                @relation(fields: [testId], references: [id])
-//   name                  String
-//   teacher               Teacher[]
-// }
 
 // Have access for his courses
 model Student {
@@ -136,43 +113,27 @@ model Student {
   updateAt              DateTime            @updatedAt
   classId               String              @db.ObjectId
   class                 Class               @relation(fields: [classId], references: [id])
-  // parentId              String              @unique
-  // parent                Parent              @relation(fields: [parentId], references: [id])
   grades                Grade[]   
   name                  String?
   email                 String?              @unique
   password              String?     
 }
 
-// // Marks of students
-// model Mark {
-//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt   DateTime    @default(now())
-//   updateAt    DateTime    @updatedAt
-//   studentId   String
-//   student     Student     @relation(fields: [studentId], references: [id])
-//   historyTests  HistoryTest?
-// }
-
 // History Tests for the each mark
 model Grade {
   id                  String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt           DateTime    @default(now())
   updateAt            DateTime    @updatedAt
-  // markId              String      @unique
-  // mark                Mark        @relation(fields: [markId], references: [id])
   studentId           String      @db.ObjectId
   student             Student     @relation(fields: [studentId], references: [id])
   teacherId           String      @db.ObjectId
   teacher             Teacher     @relation(fields: [teacherId], references: [id])
-  // name                String
   timeToResolve       DateTime
   name                String
   mark                String?
   completed           Boolean?
   status              String? // corrected_test, incomplete_test, suspicious_copying
   suspicious_hours    String?
-  // course              Course[]
   solutions           Solution[]
 }
 
@@ -187,45 +148,6 @@ model Solution {
   answerId        String?
   answerContent   String?
   status          String?
-  // suspicious      String? // corrected_test, incomplete_test, suspicious_copying
-  // suspicious_hours  String?
   mark            String?
   completed       Boolean?
 }
-
-// // Subject questions
-// model SubjectQuestion {
-//   id              String      @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt       DateTime    @default(now())
-//   updateAt        DateTime    @updatedAt
-//   teacherId       String
-//   teacher         Teacher     @relation(fields: [teacherId], references: [id])
-//   answers         SubjectAnswer[]
-//   field           String
-// }
-
-// Subject Answer
-// model ExerciseAnswer {
-//   id              String              @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt       DateTime            @default(now())
-//   updateAt        DateTime            @updatedAt
-//   questionId      String
-//   question        SubjectQuestion     @relation(fields: [questionId], references: [id])
-//   field           String
-//   positive        Boolean
-// }
-
-// Store 
-
-// Have access for marks of student
-// model Parent {
-//   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt   DateTime    @default(now())
-//   updateAt    DateTime    @updatedAt
-//   classId     String              
-//   class       Class       @relation(fields: [classId], references: [id])
-//   student     Student?
-//   name        String
-//   email       String      @unique
-//   password    String
-// }

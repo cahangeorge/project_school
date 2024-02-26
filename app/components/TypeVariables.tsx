@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Select } from "./ui/Select.tsx"
-import { Input } from "./ui/Input.tsx"
 import { c_data_types, c_type_modifiers, icons } from "#app/utils/list.values.ts"
 import { Icon } from "./ui/Icon.tsx"
 
@@ -10,15 +9,14 @@ type Textarea = {
     defaultValue: string | undefined,
     isError: string | undefined | null,
     style: string,
-    variables: any,
-    setVariables: any
+    variables: any
 }
 
 export const TypeVariables = (
-    { name, placeholder, defaultValue, isError, variables, setVariables } : Textarea
+    { name, placeholder, defaultValue, isError, variables } : Textarea
 ) => {
     const [variablesModified, setVariablesModified] = useState<any>(defaultValue?.split(',') || [])
-    // console.log(variablesModified)
+
     const [value, setValue] = useState("")
 
     const [chooseVariable, setChooseVariable] = useState("")
@@ -26,9 +24,9 @@ export const TypeVariables = (
     const [chooseVariableTypeModifier, setChooseVariableTypeModifier] = useState("")
 
     function addModifier() {
-        // console.log(value)
+
         setVariablesModified([...variablesModified, chooseVariableTypeModifier + ' ' + chooseVariableType + ' ' + chooseVariable])
-        // console.log(variables)
+        
         setValue('')
     }
 
